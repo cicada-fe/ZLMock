@@ -4,6 +4,8 @@
 
 
 var express = require('express');
+var URL = require('url');
+var mockService = require('../../utility/mockService');
 var router = express.Router();
 
 var responBody = {
@@ -17,23 +19,16 @@ var responBody = {
 /**
  * how to get the params from req
  *
- demo.use(function (req, res, next) {
-    console.log('Time:', Date.now());
-    console.log('Req.params:', req.params);
-    console.log('Req.body:', req.body);
-    console.log('Req.query:', req.query);
+ * */
+router.use(function (req, res, next) {
+
     next();
   });
- */
+
 
 router.use(function (req, res, next) {
     responBody.ts = Date.now();
     next();
-});
-
-router.post('/', function(req, res) {
-    responBody.bizData = {'111':'1111'};
-    res.send(responBody);
 });
 
 router.post('/queryUser', function(req, res) {
@@ -54,6 +49,16 @@ router.post('/queryList', function(req, res) {
         [{'userName':'Eric',"userGender":"男"}];
     responBody.bizData = userList;
     res.send(responBody);
+});
+
+router.post('/*', function(req, res) {
+    var url = URL.parse(req.url);
+    var interfaceName = url.path.split('?').shift();
+    mockService.queryResponseData(interfaceName,function (result){
+        console.log(result.responseData);
+        responBody.bizData = result;
+        res.send(responBody);
+    });
 });
 
 module.exports = router;
