@@ -10,6 +10,7 @@ var log = require('./log');
 var compression = require('compression');
 
 
+
 //设置基础
 var app = express();
 var wind = express();
@@ -65,6 +66,7 @@ log.use(app);
 
 //路由配置
 route.init(wind);
+
 
 
 
