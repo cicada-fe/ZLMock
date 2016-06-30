@@ -1,10 +1,9 @@
 /**
- * Created by yluo on 6/22/16.
+ * Created by yluo on 16/6/30.
  */
 
 
 var express = require('express');
-var URL = require('url');
 var mockService = require('../../utility/mockService');
 var router = express.Router();
 
@@ -16,28 +15,18 @@ var responBody = {
     "uri": ""
 };
 
-/**
- * how to get the params from req
- *
- * */
 router.use(function (req, res, next) {
 
     next();
-  });
+});
 
 router.use(function (req, res, next) {
     responBody.ts = Date.now();
     next();
 });
 
-router.post('/*', function(req, res) {
-    var url = URL.parse(req.url);
-    var interfaceName = url.path.split('?').shift();
-    mockService.queryResponseData(interfaceName,function (result){
-        console.log(result.responseData);
-        responBody.bizData = result;
-        res.send(responBody);
-    });
+router.post('/insert', function(req, res) {
+    console.log(req.body);
 });
 
 module.exports = router;

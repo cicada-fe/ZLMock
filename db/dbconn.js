@@ -6,7 +6,7 @@ var mysql  = require( "mysql");
 
 
 const DB_CONFIG = {
-    host     : '172.16.160.61',
+    host     : 'localhost',
     user     : 'root',
     password : '111111',
     database : 'mock'
@@ -28,6 +28,20 @@ class DBConnection {
             connection = new DBConnection();
         }
         return connection;
+    }
+
+    static query(sql, paramList, callback) {
+        DBConnection.getInstance().client.query(sql,paramList,(err, results, fields)=> {
+                return new Promise(function (resolve, reject) {
+                    if (err) {
+                        resolve(results);
+                    } else {
+                        reject(err);
+                    }
+                });
+            }
+        )
+
     }
 }
 

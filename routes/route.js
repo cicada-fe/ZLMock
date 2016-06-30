@@ -7,7 +7,8 @@
 var  routes =
     {
         "/movie": require("./movie/index.ctrl"),
-        "/mock" : require("./mock/index.ctrl")
+        "/mock" : require("./mock/index.ctrl"),
+        "/mockedit" : require("./mockedit/index.ctrl")
     }
 
 var init  = function(app){
